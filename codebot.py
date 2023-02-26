@@ -1,13 +1,24 @@
 HELP = """
 help - Напечатать справку по программе
 add  - Добавить задачу в список
-show - Напечатать все добавленные задачи"""
+show - Напечатать все добавленные задачи
+random - Добавляет случайную задачу на дату сегодня"""
+
+RANDOM_TASK = "Купить порошок для стирки"
 
 tascs = {
 
 } # <--- это словарь
 
 run = True
+
+def add_todo(date, task):
+    if date in tascs:    # если дата есть в словаре, то добавляем зададчу в список
+            tascs[date].append(task)
+    else:
+        tascs[date] = []
+        tascs[date].append(task)
+    print("Задача", task, "добавлена на дату", date)
 
 while run:
     # Цикл выполняется пока не будет введена команда, которой нет в HELP
@@ -24,16 +35,9 @@ while run:
     elif command == "add":
         date = input("Введите дату для добавления задач: ")
         task = input("Введите название задачи: ")
-        if date in tascs:    # если дата есть в словаре, то добавляем зададчу в список
-            task[date].append(tascs)
-        else:
-            # если даты нет в словаре, то добавляем задачу с ключем date
-            if date in tascs:
-                tascs[date] = []
-                tascs[date].append(task)
-            else:
-                print("Такой даты не существует")
-        print("Задача", task, "добавлена на дату", date)
+        add_todo(date, task)
+    elif command == "random":
+        add_todo("сегодня", RANDOM_TASK)
     else:
         print("Неизвестная команда")
         break
